@@ -3,7 +3,7 @@ const FIRST_EPISODE_LABEL = "Épisode 1 - Audit (ITFW)";
 const FIRST_EPISODE_DESCRIPTION_HTML = `
 Nous sommes tres heureux de vous partager aujourd'hui le premier episode de notre projet <span class="desc-highlight">Inside Inside Finance World</span> !
 
-Pour ce premier episode, nous avons le plaisir de vous presenter <span class="desc-highlight">Mehdi Nassrallah</span>, ancien eleve de <span class="desc-highlight">GEM</span>, qui travaille en audit chez <span class="desc-highlight">PwC</span>.Une belle occasion d'en apprendre davantage sur son metier, son quotidien et son experience dans le domaine.
+Pour ce premier episode, nous avons le plaisir de vous presenter <span class="desc-highlight">Mehdi Nassrallah</span>, ancien eleve de <span class="desc-highlight">GEM</span>, qui travaille en audit chez <span class="desc-highlight">PwC</span>.<br /><br />Une belle occasion d'en apprendre davantage sur son metier, son quotidien et son experience dans le domaine.
 
 Nous esperons que cet episode vous plaira et qu'il vous permettra de decouvrir la finance sous un angle plus concret et accessible !
 
