@@ -1,14 +1,14 @@
 const PODCAST_FEED = "https://feeds.buzzsprout.com/2605735.rss";
 const FIRST_EPISODE_LABEL = "Épisode 1 - Audit (ITFW)";
 const FIRST_EPISODE_DESCRIPTION_HTML = `
-Nous sommes tres heureux de vous partager aujourd'hui le premier episode de notre projet <span class="desc-highlight">Inside Inside Finance World</span> !
+Nous sommes tres heureux de vous partager aujourd'hui le premier episode de notre projet <span class="desc-highlight">Inside the Finance World</span> !
 
 Pour ce premier episode, nous avons le plaisir de vous presenter <span class="desc-highlight">Mehdi Nassrallah</span>, ancien eleve de <span class="desc-highlight">GEM</span>, qui travaille en audit chez <span class="desc-highlight">PwC</span>.<br /><br />Une belle occasion d'en apprendre davantage sur son metier, son quotidien et son experience dans le domaine.
 
 Nous esperons que cet episode vous plaira et qu'il vous permettra de decouvrir la finance sous un angle plus concret et accessible !
 
 N'hesitez pas a nous donner des retours en repondant a ce questionnaire !!`;
-const FIRST_EPISODE_DESCRIPTION = `Nous sommes très heureux de vous partager aujourd’hui le premier épisode de notre projet Inside Inside Finance World !
+const FIRST_EPISODE_DESCRIPTION = `Nous sommes très heureux de vous partager aujourd’hui le premier épisode de notre projet Inside the Finance World !
 
 Pour ce premier épisode, nous avons le plaisir de vous présenter Mehdi Nassrallah, ancien élève de GEM, qui travaille en audit chez PwC.Une belle occasion d’en apprendre davantage sur son métier, son quotidien et son expérience dans le domaine.
 
