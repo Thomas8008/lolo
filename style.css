@@ -20,7 +20,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-family: "Sora", "Segoe UI", sans-serif;
   color: var(--ink);
   background:
     radial-gradient(circle at 10% 20%, rgba(77, 165, 140, 0.18), transparent 35%),
@@ -89,6 +89,21 @@ body {
   padding: 28px;
 }
 
+.description-card {
+  margin-top: 14px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  padding: 22px 28px;
+}
+
+.description-title {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
 .now-playing {
   display: flex;
   align-items: center;
@@ -122,12 +137,37 @@ body {
 
 #episode-title {
   margin: 10px 0 6px;
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-family: "DM Serif Display", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.35rem, 2.9vw, 2.1rem);
 }
 
 #episode-meta {
   margin: 0;
   color: var(--muted);
+}
+
+.episode-description-main {
+  margin: 0;
+  color: #425754;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.desc-highlight {
+  display: inline-block;
+  font-weight: 700;
+  color: #204d41;
+  background: rgba(77, 165, 140, 0.16);
+  border-radius: 8px;
+  padding: 1px 6px;
+}
+
+.cta-btn {
+  margin-top: 12px;
+  display: inline-flex;
+  text-decoration: none;
 }
 
 audio {
@@ -218,13 +258,31 @@ audio {
 .episode-label {
   margin: 0;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .episode-date {
   margin: 4px 0 0;
   font-size: 0.86rem;
   color: var(--muted);
+}
+
+.episode-description {
+  margin: 6px 0 0;
+  font-size: 0.88rem;
+  color: #4b615d;
+  line-height: 1.35;
+}
+
+@media (max-width: 1024px) {
+  .app-shell {
+    max-width: 900px;
+  }
+
+  .episodes-card {
+    padding: 22px;
+  }
 }
 
 @media (max-width: 720px) {
@@ -236,15 +294,36 @@ audio {
     padding: 16px;
   }
 
+  .description-card {
+    padding: 16px;
+  }
+
   .now-playing {
     align-items: flex-start;
+    flex-direction: column;
   }
 
   .cover-art {
-    width: 72px;
-    height: 72px;
-    flex-basis: 72px;
+    width: 100%;
+    height: 220px;
+    flex-basis: auto;
     border-radius: 14px;
+  }
+
+  .player-controls {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .cta-btn {
+    width: 100%;
   }
 
   .episode-item {

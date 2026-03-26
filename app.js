@@ -1,5 +1,21 @@
 const PODCAST_FEED = "https://feeds.buzzsprout.com/2605735.rss";
 const FIRST_EPISODE_LABEL = "Épisode 1 - Audit (ITFW)";
+const FIRST_EPISODE_DESCRIPTION_HTML = `
+Nous sommes tres heureux de vous partager aujourd'hui le premier episode de notre projet <span class="desc-highlight">Inside Inside Finance World</span> !
+
+Pour ce premier episode, nous avons le plaisir de vous presenter <span class="desc-highlight">Mehdi Nassrallah</span>, ancien eleve de <span class="desc-highlight">GEM</span>, qui travaille en audit chez <span class="desc-highlight">PwC</span>.Une belle occasion d'en apprendre davantage sur son metier, son quotidien et son experience dans le domaine.
+
+Nous esperons que cet episode vous plaira et qu'il vous permettra de decouvrir la finance sous un angle plus concret et accessible !
+
+N'hesitez pas a nous donner des retours en repondant a ce questionnaire !!`;
+const FIRST_EPISODE_DESCRIPTION = `Nous sommes très heureux de vous partager aujourd’hui le premier épisode de notre projet Inside Inside Finance World !
+
+Pour ce premier épisode, nous avons le plaisir de vous présenter Mehdi Nassrallah, ancien élève de GEM, qui travaille en audit chez PwC.Une belle occasion d’en apprendre davantage sur son métier, son quotidien et son expérience dans le domaine.
+
+Nous espérons que cet épisode vous plaira et qu’il vous permettra de découvrir la finance sous un angle plus concret et accessible !
+
+N’hésitez pas à nous donner des retours en répondant à ce questionnaire !!`;
+const FIRST_EPISODE_QUESTIONNAIRE_URL = "https://forms.gle/xP8LBG7VczJfNBra9";
 
 const state = {
   episodes: [],
@@ -11,6 +27,8 @@ const elements = {
   audio: document.getElementById("audio-player"),
   title: document.getElementById("episode-title"),
   meta: document.getElementById("episode-meta"),
+  description: document.getElementById("episode-description"),
+  questionnaireBtn: document.getElementById("questionnaire-btn"),
   episodesList: document.getElementById("episodes-list"),
   refreshBtn: document.getElementById("refresh-btn"),
   prevBtn: document.getElementById("prev-btn"),
@@ -37,6 +55,17 @@ function formatDate(rawDate) {
     month: "short",
     year: "numeric",
   });
+}
+
+function stripHtml(text) {
+  const temp = document.createElement("div");
+  temp.innerHTML = text || "";
+  return (temp.textContent || temp.innerText || "").trim();
+}
+
+function getEpisodeDescription(index, episode) {
+  if (index === 0) return FIRST_EPISODE_DESCRIPTION;
+  return stripHtml(episode.description) || "Description a venir.";
 }
 
 async function fetchFeedJson(feedUrl) {
@@ -83,6 +112,7 @@ async function loadEpisodesFromFeed(feedUrl) {
       .map((item) => ({
         audioUrl: item.enclosure?.link || item.link || "",
         pubDate: item.pubDate || "",
+        description: item.description || "",
       }))
       .filter((item) => item.audioUrl);
   } catch {
@@ -97,6 +127,7 @@ async function loadEpisodesFromFeed(feedUrl) {
           item.querySelector("link")?.textContent?.trim() ||
           "",
         pubDate: item.querySelector("pubDate")?.textContent?.trim() || "",
+        description: item.querySelector("description")?.textContent?.trim() || "",
       }))
       .filter((item) => item.audioUrl);
   }
@@ -108,6 +139,9 @@ function updatePlayer() {
   if (!episode) {
     elements.title.textContent = FIRST_EPISODE_LABEL;
     elements.meta.textContent = "Pret a demarrer";
+    elements.description.innerHTML = FIRST_EPISODE_DESCRIPTION_HTML;
+    elements.questionnaireBtn.href = FIRST_EPISODE_QUESTIONNAIRE_URL;
+    elements.questionnaireBtn.style.display = "inline-flex";
     elements.audio.removeAttribute("src");
     elements.audio.load();
     renderEpisodes();
@@ -116,6 +150,17 @@ function updatePlayer() {
 
   elements.title.textContent = getEpisodeLabel(state.currentIndex);
   elements.meta.textContent = formatDate(episode.pubDate);
+  if (state.currentIndex === 0) {
+    elements.description.innerHTML = FIRST_EPISODE_DESCRIPTION_HTML;
+  } else {
+    elements.description.textContent = getEpisodeDescription(state.currentIndex, episode);
+  }
+  if (state.currentIndex === 0) {
+    elements.questionnaireBtn.href = FIRST_EPISODE_QUESTIONNAIRE_URL;
+    elements.questionnaireBtn.style.display = "inline-flex";
+  } else {
+    elements.questionnaireBtn.style.display = "none";
+  }
   elements.audio.src = episode.audioUrl;
   renderEpisodes();
 }
