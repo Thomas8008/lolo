@@ -1,4 +1,5 @@
 const PODCAST_FEED = "https://feeds.buzzsprout.com/2605735.rss";
+const FIRST_EPISODE_LABEL = "Épisode 1 - Audit (ITFW)";
 
 const state = {
   episodes: [],
@@ -20,6 +21,11 @@ const elements = {
 
 function setStatus(message) {
   elements.status.textContent = message;
+}
+
+function getEpisodeLabel(index) {
+  if (index === 0) return FIRST_EPISODE_LABEL;
+  return `Episode ${index + 1}`;
 }
 
 function formatDate(rawDate) {
@@ -100,7 +106,7 @@ function updatePlayer() {
   const episode = state.episodes[state.currentIndex];
 
   if (!episode) {
-    elements.title.textContent = "Episode 1";
+    elements.title.textContent = FIRST_EPISODE_LABEL;
     elements.meta.textContent = "Pret a demarrer";
     elements.audio.removeAttribute("src");
     elements.audio.load();
@@ -108,7 +114,7 @@ function updatePlayer() {
     return;
   }
 
-  elements.title.textContent = `Episode ${state.currentIndex + 1}`;
+  elements.title.textContent = getEpisodeLabel(state.currentIndex);
   elements.meta.textContent = formatDate(episode.pubDate);
   elements.audio.src = episode.audioUrl;
   renderEpisodes();
@@ -155,7 +161,7 @@ function renderEpisodes() {
 
     const label = document.createElement("p");
     label.className = "episode-label";
-    label.textContent = `Episode ${index + 1}`;
+    label.textContent = getEpisodeLabel(index);
 
     const date = document.createElement("p");
     date.className = "episode-date";
