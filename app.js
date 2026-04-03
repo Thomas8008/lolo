@@ -87,6 +87,51 @@ function formatDate(rawDate) {
   });
 }
 
+function getEpisodeNumber(text) {
+  const match = String(text || "").match(/(?:episode|ep|épisode)\s*(\d+)/i);
+  if (!match) return Number.NaN;
+  return Number(match[1]);
+}
+
+function getLatestEpisodeIndex(episodes) {
+  if (!Array.isArray(episodes) || episodes.length === 0) {
+    return -1;
+  }
+
+  // Preferer l'episode avec le numero le plus eleve (ex: episode 2 > episode 1).
+  let highestNumber = Number.NEGATIVE_INFINITY;
+  let highestNumberIndex = -1;
+
+  episodes.forEach((episode, index) => {
+    const episodeNumber = getEpisodeNumber(episode.label || episode.title || "");
+    if (!Number.isNaN(episodeNumber) && episodeNumber > highestNumber) {
+      highestNumber = episodeNumber;
+      highestNumberIndex = index;
+    }
+  });
+
+  if (highestNumberIndex !== -1) {
+    return highestNumberIndex;
+  }
+
+  let latestIndex = -1;
+  let latestTime = Number.NEGATIVE_INFINITY;
+
+  episodes.forEach((episode, index) => {
+    const timestamp = new Date(episode.pubDate || "").getTime();
+    if (!Number.isNaN(timestamp) && timestamp > latestTime) {
+      latestTime = timestamp;
+      latestIndex = index;
+    }
+  });
+
+  if (latestIndex !== -1) {
+    return latestIndex;
+  }
+
+  return episodes.length - 1;
+}
+
 async function fetchFeedJson(feedUrl) {
   const endpoint = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
   const response = await fetch(endpoint);
@@ -187,7 +232,7 @@ function buildEpisodeList(primaryItems, secondaryItems) {
     resolvedEpisodes.push({
       label: EPISODE_CONFIG[1].label,
       audioUrl: EPISODE_CONFIG[1].audioUrlOverride || secondEpisodeSource.audioUrl,
-      pubDate: secondEpisodeSource.pubDate,
+      pubDate: "2026-04-03T12:00:00+02:00", // Date forcée à aujourd'hui
       descriptionHtml: EPISODE_CONFIG[1].descriptionHtml,
       showQuestionnaire: EPISODE_CONFIG[1].showQuestionnaire,
       questionnaireUrl: EPISODE_CONFIG[1].questionnaireUrl,
@@ -301,7 +346,8 @@ async function loadEpisodes() {
       setStatus("Un seul episode RSS trouve. Le deuxieme peut etre indisponible temporairement.");
     }
 
-    if (state.currentIndex === -1 || state.currentIndex >= state.episodes.length) {
+    state.currentIndex = getLatestEpisodeIndex(state.episodes);
+    if (state.currentIndex === -1) {
       state.currentIndex = 0;
     }
 
