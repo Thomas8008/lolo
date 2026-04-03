@@ -1,8 +1,9 @@
 const PRIMARY_PODCAST_FEED = "https://feeds.buzzsprout.com/2605735.rss";
-// Colle ici le lien RSS de l'episode 2 quand tu le recois.
-const SECONDARY_PODCAST_FEED = "https://rss.buzzsprout.com/2605735.rss";
+// Flux RSS dedie pour l'episode 2.
+const SECONDARY_PODCAST_FEED = "https://feeds.buzzsprout.com/2605735.rss";
 
 const QUESTIONNAIRE_URL = "https://forms.gle/xP8LBG7VczJfNBra9";
+const SECOND_EPISODE_AUDIO_URL = "https://www.buzzsprout.com/2605735/episodes/18954897-episode-2-asset-management-itfw.mp3?download=true";
 
 const FIRST_EPISODE_LABEL = "Épisode 1 - Audit (ITFW)";
 const SECOND_EPISODE_LABEL = "Épisode 2 - Asset Management (ITFW)";
@@ -37,6 +38,7 @@ const EPISODE_CONFIG = [
     match: /(audit|ep\s*1|episode\s*1)/i,
     descriptionHtml: FIRST_EPISODE_DESCRIPTION_HTML,
     showQuestionnaire: true,
+    questionnaireUrl: QUESTIONNAIRE_URL,
   },
   {
     label: SECOND_EPISODE_LABEL,
@@ -44,6 +46,8 @@ const EPISODE_CONFIG = [
     match: /(asset\s*management|ep\s*2|episode\s*2)/i,
     descriptionHtml: SECOND_EPISODE_DESCRIPTION_HTML,
     showQuestionnaire: true,
+    questionnaireUrl: QUESTIONNAIRE_URL,
+    audioUrlOverride: SECOND_EPISODE_AUDIO_URL,
   },
 ];
 
@@ -174,16 +178,18 @@ function buildEpisodeList(primaryItems, secondaryItems) {
       pubDate: firstEpisodeSource.pubDate,
       descriptionHtml: EPISODE_CONFIG[0].descriptionHtml,
       showQuestionnaire: EPISODE_CONFIG[0].showQuestionnaire,
+      questionnaireUrl: EPISODE_CONFIG[0].questionnaireUrl,
     });
   }
 
   if (secondEpisodeSource) {
     resolvedEpisodes.push({
       label: EPISODE_CONFIG[1].label,
-      audioUrl: secondEpisodeSource.audioUrl,
+      audioUrl: EPISODE_CONFIG[1].audioUrlOverride || secondEpisodeSource.audioUrl,
       pubDate: secondEpisodeSource.pubDate,
       descriptionHtml: EPISODE_CONFIG[1].descriptionHtml,
       showQuestionnaire: EPISODE_CONFIG[1].showQuestionnaire,
+      questionnaireUrl: EPISODE_CONFIG[1].questionnaireUrl,
     });
   }
 
@@ -210,7 +216,7 @@ function updatePlayer() {
   elements.description.innerHTML = episode.descriptionHtml;
 
   if (episode.showQuestionnaire) {
-    elements.questionnaireBtn.href = QUESTIONNAIRE_URL;
+    elements.questionnaireBtn.href = episode.questionnaireUrl || QUESTIONNAIRE_URL;
     elements.questionnaireBtn.style.display = "inline-flex";
   } else {
     elements.questionnaireBtn.style.display = "none";
