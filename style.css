@@ -150,9 +150,28 @@ body {
 
 .episode-description-main {
   margin: 0;
-  color: #425754;
-  line-height: 1.45;
-  white-space: pre-line;
+  color: #2f4440;
+  font-size: clamp(1.01rem, 0.95rem + 0.25vw, 1.12rem);
+  line-height: 1.72;
+  letter-spacing: 0.003em;
+  max-width: 74ch;
+}
+
+.episode-description-main p {
+  margin: 0 0 12px;
+}
+
+.episode-description-main p:last-child {
+  margin-bottom: 0;
+}
+
+.episode-description-main ul {
+  margin: 2px 0 14px;
+  padding-left: 24px;
+}
+
+.episode-description-main li {
+  margin-bottom: 8px;
 }
 
 .desc-highlight {
