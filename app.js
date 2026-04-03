@@ -3,6 +3,7 @@ const PRIMARY_PODCAST_FEED = "https://feeds.buzzsprout.com/2605735.rss";
 const SECONDARY_PODCAST_FEED = "https://feeds.buzzsprout.com/2605735.rss";
 
 const QUESTIONNAIRE_URL = "https://forms.gle/xP8LBG7VczJfNBra9";
+const SECOND_EPISODE_QUESTIONNAIRE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSetwQ-HwXIv--NHYFm7lbf_e3w05aHEAYikSjOOILTSY8UzvA/viewform?fbclid=PAVERFWAQ8mx1leHRuA2FlbQIxMABzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAaelRokcmiGZo2Gs4jWiKEOaQv-C_LBWULCF3S2k3erdx69XyNeAQq6CBSDWWg_aem_4-CPi6OPLKOA3n2dV69XOQ";
 const SECOND_EPISODE_AUDIO_URL = "https://www.buzzsprout.com/2605735/episodes/18954897-episode-2-asset-management-itfw.mp3?download=true";
 
 const FIRST_EPISODE_LABEL = "Épisode 1 - Audit (ITFW)";
@@ -46,7 +47,7 @@ const EPISODE_CONFIG = [
     match: /(asset\s*management|ep\s*2|episode\s*2)/i,
     descriptionHtml: SECOND_EPISODE_DESCRIPTION_HTML,
     showQuestionnaire: true,
-    questionnaireUrl: QUESTIONNAIRE_URL,
+    questionnaireUrl: SECOND_EPISODE_QUESTIONNAIRE_URL,
     audioUrlOverride: SECOND_EPISODE_AUDIO_URL,
   },
 ];
